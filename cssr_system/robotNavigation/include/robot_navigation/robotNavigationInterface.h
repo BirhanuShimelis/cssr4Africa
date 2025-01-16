@@ -92,7 +92,7 @@ using namespace boost::algorithm;
    ROS package name
 
 ****************************************************************************************************************************/
-#define ROS_PACKAGE_NAME    "robot_navigation"              // Change to cssr_system for integration
+#define ROS_PACKAGE_NAME    "cssr_system"              // Change to cssr_system for integration
 
 
 /***************************************************************************************************************************
