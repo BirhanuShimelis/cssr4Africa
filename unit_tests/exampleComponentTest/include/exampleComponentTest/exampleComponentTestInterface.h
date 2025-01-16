@@ -1,0 +1,7 @@
+/* animateBehaviourTestInterface.h */
+
+#ifndef EXAMPLE_COMPONENT_TEST_INTERFACE_H
+#define EXAMPLE_COMPONENT_TEST_INTERFACE_H
+
+
+#endif // EXAMPLE_COMPONENT_TEST_INTERFACE_H
