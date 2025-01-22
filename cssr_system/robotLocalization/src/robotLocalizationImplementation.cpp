@@ -23,7 +23,7 @@ RobotLocalization::RobotLocalization() {
 void RobotLocalization::loadConfiguration() {
     // Load configuration file
     ros::NodeHandle private_nh("~");
-    std::string config_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/config/robotLocalizationConfiguration.ini";
+    std::string config_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/robotLocalization/config/robotLocalizationConfiguration.ini";
     std::ifstream infile(config_file);
     if (!infile.is_open()) {
         ROS_ERROR("Failed to open configuration file: %s", config_file.c_str());
@@ -56,9 +56,9 @@ void RobotLocalization::loadConfiguration() {
 void RobotLocalization::loadTopicNames() {
     std::string topics_file;
     if (platform_ == "robot")
-        topics_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/data/" + robot_topics_file_;
+        topics_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/robotLocalization/data/" + robot_topics_file_;
     else
-        topics_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/data/" + simulator_topics_file_;
+        topics_file = ros::package::getPath(ROS_PACKAGE_NAME) + "/robotLocalization/data/" + simulator_topics_file_;
 
     std::ifstream infile(topics_file.c_str());
     if (!infile.is_open()) {

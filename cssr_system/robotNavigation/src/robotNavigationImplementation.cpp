@@ -97,7 +97,7 @@ void read_robot_pose_input(std::vector<double>& robot_pose_input){
     #endif
 
     // set configuration path
-    data_path += "/data/";
+    data_path += "/robotNavigation/data/";
     data_path_and_file = data_path;
     data_path_and_file += data_file;
 
@@ -181,7 +181,7 @@ void write_robot_pose_input(std::vector<double>& robot_pose_input){
     #endif
 
     // set configuration path
-    data_path += "/data/";
+    data_path += "/robotNavigation/data/";
     data_path_and_file = data_path;
     data_path_and_file += data_file;
 
@@ -231,7 +231,7 @@ int extract_topic(string key, string topic_file_name, string *topic_name){
     #endif
 
     // set topic path    
-    topic_path += "/data/";
+    topic_path += "/robotNavigation/data/";
     topic_path_and_file = topic_path;
     topic_path_and_file += topic_file_name;
 
@@ -312,73 +312,14 @@ void move_to_position(ControlClientPtr& client, const std::vector<std::string>& 
     // Goal messages for the hand
     control_msgs::FollowJointTrajectoryGoal hand_open_goal;
     control_msgs::FollowJointTrajectoryGoal hand_close_goal;
-
-   //  // If the hand should be opened, create a client and send a goal to open the hand
-   //  if(open_hand){
-   //      hand_client = create_client(hand_topic);                    // Create a client for the hand
-   //      if(hand_client == NULL){
-   //          return;
-   //      }
-   //      std::vector<std::string> hand_joint_names = {hand};         // Set the joint names for the hand to the specified hand
-
-   //      // Set the trajectory for the hand to open
-   //      trajectory_msgs::JointTrajectory& hand_open_trajectory = hand_open_goal.trajectory;
-   //      hand_open_trajectory.joint_names = hand_joint_names;
-   //      hand_open_trajectory.points.resize(1);
-   //      hand_open_trajectory.points[0].positions = open_position;
-   //      hand_open_trajectory.points[0].time_from_start = ros::Duration(0.05);
-
-   //      // Send the goal to open the hand
-   //      hand_client->sendGoal(hand_open_goal);  // Open the hand
-   //  }
-
     // Send the goal to move the actuator to the specified position
     client->sendGoal(goal);
     client->waitForResult(ros::Duration(duration)); // Wait for the actuator to reach the specified position
 
-   //  // If the hand should not be opened, create a client and send a goal to take the hand to the home position
-   //  if(!open_hand){
-   //      hand_client = create_client(hand_topic);                    // Create a client for the hand
-   //      if(hand_client == NULL){
-   //          return;
-   //      }
-   //      std::vector<std::string> hand_joint_names = {hand};         // Set the joint names for the hand to the specified hand
-
-   //      // Set the trajectory for the hand to move to home position
-   //      trajectory_msgs::JointTrajectory& hand_close_trajectory = hand_close_goal.trajectory;
-   //      hand_close_trajectory.joint_names = hand_joint_names;
-   //      hand_close_trajectory.points.resize(1);
-   //      hand_close_trajectory.points[0].positions = home_position;
-   //      hand_close_trajectory.points[0].time_from_start = ros::Duration(0.05);
-
-   //      // Send the goal to take the hand to the home position
-   //      hand_client->sendGoal(hand_close_goal);  // Close the hand
-   //  }
-
     return;
 }
 
-/* Read the overt attention configuration */
-/* 
- *   Function to read the overt attention configuration.
- *   The configuration file contains the platform, camera, realignment threshold, x offset to head yaw, y offset to head pitch, simulator topics, robot topics, topics filename, and debug mode.
- *   The function reads the configuration file and sets the values for the specified parameters.
- * 
- * @param:
- *   platform: the platform value
- *   camera: the camera value
- *   realignment_threshold: the realignment threshold value
- *   x_offset_to_head_yaw: the x offset to head yaw value
- *   y_offset_to_head_pitch: the y offset to head pitch value
- *   simulator_topics: the simulator topics value
- *   robot_topics: the robot topics value
- *   topics_filename: the topics filename value
- *   debug_mode: the debug mode value
- * 
- * @return:
- *   0 if the configuration file is read successfully
- *   1 if the configuration file is not read successfully
- */
+
 int read_configuration_file(string* platform, string* environment_map_file, string* configuration_map_file, int* path_planning_algorithm, bool* social_distance_mode, string* simulator_topics, string* robot_topics, string* topics_filename, bool* debug_mode){
     std::string config_file = "robotNavigationConfiguration.ini";       // data filename
     std::string config_path;                                            // data path
@@ -410,7 +351,7 @@ int read_configuration_file(string* platform, string* environment_map_file, stri
     #endif
 
     // set configuration path
-    config_path += "/config/";
+    config_path += "/robotNavigation/config/";
     config_path_and_file = config_path;
     config_path_and_file += config_file;
 
@@ -528,7 +469,7 @@ int read_configuration_file(string* platform, string* environment_map_file, stri
     return 0;
 }
 
-/* Print the overt attention configuration */
+/* Print the robot navigation configuration */
 void print_configuration(string platform, string environment_map_file, string configuration_map_file, int path_planning_algorithm, bool social_distance_mode, string simulator_topics, string robot_topics, string topics_filename, bool debug_mode){
     printf("Platform: %s\n", platform.c_str());
     printf("Environment Map File: %s\n", environment_map_file.c_str());
@@ -861,22 +802,6 @@ int manhattan_distance_heuristic(int start, int node, int goal, int cols) {
     int dx = std::abs(node_x - goal_x);
     int dy = std::abs(node_y - goal_y);
 
-   //  heuristic =  static_cast<int>(D * (dx + dy) + (D2 - 2 * D) * std::min(dx, dy));
-   // heuristic =  static_cast<int>(D * (dx + dy));
-
-   //  int start_x = start % cols;
-   //  int start_y = start / cols;
-
-   //    int dx_start = start_x - goal_x;
-   //    int dy_start = start_y - goal_y;
-
-   //    int dx_node = node_x - goal_x;
-   //    int dy_node = node_y - goal_y;
-
-   //    int cross_product = abs((dx_start * dy_node )- (dy_start * dx_node));
-
-   //    heuristic += cross_product * 0.001;
-
     return heuristic;
 }
 
@@ -904,33 +829,6 @@ int euclidean_distance_heuristic(int start, int node, int goal, int cols) {
     return heuristic;
 }
 
-// // Manhattan distance heuristic function
-// int manhattan_distance_heuristic(int node, int goal, int cols) {
-//     int goal_x = goal % cols;
-//     int goal_y = goal / cols;
-//     int node_x = node % cols;
-//     int node_y = node / cols;
-//    //  return std::abs(goal_x - node_x) + std::abs(goal_y - node_y);
-
-//     double D = 60;
-//     double D2 = D * 1.414;
-
-//     int dx = std::abs(node_x - goal_x);
-//     int dy = std::abs(node_y - goal_y);
-
-//     return static_cast<int>(D * (dx + dy) + (D2 - 2 * D) * std::min(dx, dy));
-// }
-
-// // Euclidean distance heuristic function
-// int euclidean_distance_heuristic(int node, int goal, int cols) {
-//     int goal_x = goal % cols;
-//     int goal_y = goal / cols;
-//     int node_x = node % cols;
-//     int node_y = node / cols;
-//     int heuristic = static_cast<int>(std::sqrt(std::pow(goal_x - node_x, 2) + std::pow(goal_y - node_y, 2)));
-//    //  heuristic = heuristic * 1000;
-//     return heuristic;
-// }
 
 void convert_world_to_pixel(double world_x, double world_y, int& pixel_x, int& pixel_y, double room_width, double room_height, int image_width, int image_height) {
     pixel_x = static_cast<int>(world_x * image_width / room_width);
@@ -952,14 +850,6 @@ void draw_path_on_map(const std::vector<waypointType>& valid_waypoints, const cv
         cv::drawMarker(output_image, cv::Point(valid_waypoints[i].x, valid_waypoints[i].y), cv::Scalar(0, 255, 0), cv::MARKER_CROSS, 10, 2);
     }
 
-   //  for (size_t i = 1; i < valid_waypoints.size(); ++i) {
-   //      int start_x = valid_waypoints[i - 1].x;
-   //      int start_y = valid_waypoints[i - 1].y;
-   //      int end_x = valid_waypoints[i].x;
-   //      int end_y = valid_waypoints[i].y;
-
-   //      cv::line(output_image, cv::Point(start_x, start_y), cv::Point(end_x, end_y), cv::Scalar(0, 0, 255), 1);
-   //  }
    for (int i=0; i<valid_path.size(); i++) {
       cv::drawMarker(output_image, cv::Point(valid_path[i].x, valid_path[i].y), cv::Scalar(0, 255, 0), cv::MARKER_SQUARE, 5, 1);
    }
@@ -1094,44 +984,6 @@ std::vector<int> astar(int start, int goal, const std::vector<std::vector<int>>&
     return {};
 }
 
-// // A* pathfinding algorithm
-// std::vector<int> astar_FUNCTIONAL(int start, int goal, const std::vector<std::vector<int>>& graph, int cols, int heuristic_type) {
-//     auto heuristic = (heuristic_type == MANHATTAN_HEURISTIC) ? manhattan_distance_heuristic : euclidean_distance_heuristic;
-
-//     std::vector<int> dist(graph.size(), INT_MAX);
-//     std::vector<int> came_from(graph.size(), -1);
-//     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
-
-//     dist[start] = 0;
-//     pq.push({0 + heuristic(start, goal, cols), start});
-
-//     while (!pq.empty()) {
-//         int current = pq.top().second;
-//         pq.pop();
-
-//         if (current == goal) {
-//             std::vector<int> path;
-//             while (current != -1) {
-//                 path.push_back(current);
-//                 current = came_from[current];
-//             }
-//             std::reverse(path.begin(), path.end());
-//             return path;
-//         }
-
-//         for (int neighbor : graph[current]) {
-//             int new_dist = dist[current] + 1;
-//             if (new_dist < dist[neighbor]) {
-//                 dist[neighbor] = new_dist;
-//                 came_from[neighbor] = current;
-//                 int priority = new_dist + heuristic(neighbor, goal, cols);
-//                 pq.push({priority, neighbor});
-//             }
-//         }
-//     }
-
-//     return {};
-// }
 
 std::vector<int> bfs(int start, int goal, const std::vector<std::vector<int>>& graph) {
     std::queue<int> queue;
@@ -1491,37 +1343,6 @@ int go_to_home(std::string actuator, std::string topics_filename, bool debug){
 
     // Set the home duration
     home_duration = 0.5;
-
-    // Set the actuator state, home position, joint names, client and number of joints based on the actuator
-   //  if(actuator == "RArm"){                             // Right arm
-   //      actuator_state = right_arm_joint_states;
-   //      actuator_home_position = right_arm_home_position;
-   //      actuator_joint_names = {"RShoulderPitch", "RShoulderRoll", "RElbowRoll", "RElbowYaw", "RWristYaw"};
-   //      actuator_client = create_client(actuator_topic);
-   //      if(actuator_client == NULL){
-   //          return 0;
-   //      }
-   //      number_of_joints = actuator_joint_names.size();
-   //      hand = "RHand";
-   //      if(extract_topic(hand, topics_filename, &hand_topic)){
-   //          return 0;
-   //      }
-   //  }
-   //  else if(actuator == "LArm"){                        // Left arm
-   //      actuator_state = left_arm_joint_states;
-   //      actuator_home_position = left_arm_home_position;
-   //      actuator_joint_names = {"LShoulderPitch", "LShoulderRoll", "LElbowRoll", "LElbowYaw", "LWristYaw"};
-   //      actuator_client = create_client(actuator_topic);
-   //      if(actuator_client == NULL){
-   //          return 0;
-   //      }
-   //      number_of_joints = actuator_joint_names.size();
-
-   //      hand = "LHand";
-   //      if(extract_topic(hand, topics_filename, &hand_topic)){
-   //          return 0;
-   //      }
-   //  }
     if(actuator == "Leg"){                         // Leg
       //   actuator_state = leg_joint_states;
         actuator_home_position = leg_home_position;
@@ -1616,11 +1437,6 @@ void setOdometryPose(double x, double y, double theta)
 }
 
 
-
-
-
-
-
 int move_robot(double start_x, double start_y, double start_theta, double goal_x, double goal_y, double goal_theta, ros::Publisher velocity_publisher, ros::Rate rate, bool debug)
 {
 
@@ -1688,7 +1504,7 @@ void save_waypoint_map(vector<int> compressionParams, Mat mapImageLarge, string 
 
     /* Combine the name for the output pathway image*/
     strcpy(path_and_input_filename, packagedir.c_str());  
-    strcat(path_and_input_filename, "/data/"); 
+    strcat(path_and_input_filename, "/robotNavigation/data/"); 
     strcat(path_and_input_filename, navigation_pathway_filename.c_str());
 
     cv::imwrite(path_and_input_filename, mapImageLarge, compressionParams);   // write the image to a file
@@ -1929,457 +1745,6 @@ void goToPoseDQ(double x, double y, double theta, locomotionParameterDataType lo
 }
 
 
-
-void goToPoseDQFunctional(double x, double y, double theta, locomotionParameterDataType locomotionParameterData, ros::Publisher pub, ros::Rate rate)
-{
-
-   bool debug = false;
-
-   geometry_msgs::Twist msg;
-
-   double start_x;
-   double start_y;
-   double start_theta;
-
-   double goal_x;
-   double goal_y;
-   double goal_theta;
-
-   double goal_direction;
-
-   double position_error;
-   double angle_error;
-
-   double angular_velocity;
-   double linear_velocity;
-   double current_linear_velocity = 0;
-
-   int number_of_ramp_up_steps = 20;
-
-   int mode; // GOING or ORIENTING
-
-   goal_x = x;
-   goal_y = y;
-   goal_theta = theta;
-
-   mode = ORIENTING; // divide and conquer always starts by adjusing the heading
-
-   do
-   {
-
-      /* get the current pose */
-
-      ros::spinOnce(); // Let ROS take over to handle the callback and publish the pose on the odom topic
-
-      position_error = sqrt((goal_x - current_x) * (goal_x - current_x) +
-                            (goal_y - current_y) * (goal_y - current_y));
-
-      goal_direction = atan2((goal_y - current_y), (goal_x - current_x));
-      // printf("Current theta %.3f\n", current_theta);
-      angle_error = goal_direction - current_theta;
-
-      /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,             */
-      /* positive and negative. Thus it can eliminate any angular error by rotating Pi radians or less in the correct direction */
-      /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                  */
-
-      if (angle_error > PI)
-      {
-         angle_error = angle_error - 2 * PI;
-      }
-      else if (angle_error < -PI)
-      {
-         angle_error = angle_error + 2 * PI;
-      }
-
-      // if (fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) {
-      if (((mode == ORIENTING) && (fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting)) || // low angular tolerance when orienting to get the best initial heading
-          ((mode == GOING) && (fabs(angle_error) > locomotionParameterData.angle_tolerance_going)))
-      { // high angular tolerance when going so we don't have to correct the heading too often
-
-         /* if the robot is not oriented correctly, adjust the heading */
-
-         if (debug)
-            printf("Orienting\n");
-
-         mode = ORIENTING; // reset mode from GOING to ORIENTING to ensure we use the lower angular tolerance when reorienting
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         msg.linear.x = 0;
-
-         angular_velocity = locomotionParameterData.angle_gain_dq * angle_error;
-
-         if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-            msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-         else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-            msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-         else
-            msg.angular.z = angular_velocity;
-      }
-      else if (position_error > locomotionParameterData.position_tolerance)
-      {
-
-         mode = GOING;
-
-         /* if the robot has not reached the goal, adjust the distance */
-
-         if (debug)
-            printf("Going\n");
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         linear_velocity = locomotionParameterData.position_gain_dq * position_error;
-
-         if (linear_velocity < locomotionParameterData.min_linear_velocity)
-            linear_velocity = locomotionParameterData.min_linear_velocity;
-         else if (linear_velocity > locomotionParameterData.max_linear_velocity)
-            linear_velocity = locomotionParameterData.max_linear_velocity;
-
-         /* if stopped, ramp up to the required velocity ... don't attempt an infinite acceleration to the required velocity */
-
-         if (current_linear_velocity == 0)
-         {
-
-            for (int i = 1; i < number_of_ramp_up_steps; i++)
-            {
-                msg.linear.x = (double)linear_velocity * ((double)i / (double)number_of_ramp_up_steps);
-                msg.angular.z = 0;
-
-                if (debug)
-                {
-         printf("Ramping up velocity\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n", msg.linear.x, msg.angular.z);
-                }
-
-                pub.publish(msg); // Publish the message
-
-                rate.sleep(); // Wait until it's time for another iteration
-            }
-            current_linear_velocity = linear_velocity;
-         }
-
-         msg.linear.x = linear_velocity;
-         msg.angular.z = 0;
-      }
-
-      if (debug)
-      {
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      pub.publish(msg); // Publish the message
-
-      rate.sleep(); // Wait until it's time for another iteration
-
-   } while ((position_error > locomotionParameterData.position_tolerance_goal) && ros::ok());
-
-   /* the robot has reached the destination so             */
-   /* adjust the orientation to match the goal orientation */
-
-   do
-   {
-
-      if (debug)
-         printf("Orienting\n");
-
-      /* get the current pose */
-
-      ros::spinOnce(); // Let ROS take over to handle the callback
-
-      angle_error = goal_theta - current_theta;
-
-      /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,            */
-      /* positive and negative. Thus it can eliminate any angular error by rotating Pi radian or less in the correct direction */
-      /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                 */
-
-      if (angle_error > PI)
-      {
-         angle_error = angle_error - 2 * PI;
-      }
-      else if (angle_error < -PI)
-      {
-         angle_error = angle_error + 2 * PI;
-      }
-
-      msg.linear.x = 0;
-
-      /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-      /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-      angular_velocity = locomotionParameterData.angle_gain_dq * angle_error;
-
-      if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-         msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-      else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-         msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-      else
-         msg.angular.z = angular_velocity;
-
-      if (debug)
-      {
-         printf("Orienting\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      if((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting)){
-
-         pub.publish(msg); // Publish the message
-
-         rate.sleep(); // Wait until it's time for another iteration
-      }
-
-   } while ((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) && ros::ok());
-
-   msg.linear.x = 0;
-   msg.angular.z = 0;
-
-   pub.publish(msg); // Publish the message
-   // rate.sleep(); // Wait until it's time for another iteration
-
-
-}
-
-
-/******************************************************************************
-
-goToPoseDQ
-
-Use the divide and conquer algorithm to drive the robot to a given pose
-
-*******************************************************************************/
-
-void goToPoseDQOld(double x, double y, double theta, locomotionParameterDataType locomotionParameterData, ros::Publisher pub, ros::Rate rate)
-{
-
-   bool debug = false;
-
-   geometry_msgs::Twist msg;
-
-   double start_x;
-   double start_y;
-   double start_theta;
-
-   double goal_x;
-   double goal_y;
-   double goal_theta;
-
-   double goal_direction;
-
-   double position_error;
-   double angle_error;
-
-   double angular_velocity;
-   double linear_velocity;
-   double current_linear_velocity = 0;
-
-   int number_of_ramp_up_steps = 20;
-
-   int mode; // GOING or ORIENTING
-
-   goal_x = x;
-   goal_y = y;
-   goal_theta = theta;
-
-   mode = ORIENTING; // divide and conquer always starts by adjusing the heading
-
-   do
-   {
-
-      /* get the current pose */
-
-      ros::spinOnce(); // Let ROS take over to handle the callback and publish the pose on the odom topic
-
-      position_error = sqrt((goal_x - current_x) * (goal_x - current_x) +
-                            (goal_y - current_y) * (goal_y - current_y));
-
-      goal_direction = atan2((goal_y - current_y), (goal_x - current_x));
-      // printf("Current theta %.3f\n", current_theta);
-      angle_error = goal_direction - current_theta;
-
-      /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,             */
-      /* positive and negative. Thus it can eliminate any angular error by rotating Pi radians or less in the correct direction */
-      /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                  */
-
-      if (angle_error > PI)
-      {
-         angle_error = angle_error - 2 * PI;
-      }
-      else if (angle_error < -PI)
-      {
-         angle_error = angle_error + 2 * PI;
-      }
-
-      // if (fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) {
-      if (((mode == ORIENTING) && (fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting)) || // low angular tolerance when orienting to get the best initial heading
-          ((mode == GOING) && (fabs(angle_error) > locomotionParameterData.angle_tolerance_going)))
-      { // high angular tolerance when going so we don't have to correct the heading too often
-
-         /* if the robot is not oriented correctly, adjust the heading */
-
-         if (debug)
-            printf("Orienting\n");
-
-         mode = ORIENTING; // reset mode from GOING to ORIENTING to ensure we use the lower angular tolerance when reorienting
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         msg.linear.x = 0;
-
-         angular_velocity = locomotionParameterData.angle_gain_dq * angle_error;
-
-         if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-            msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-         else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-            msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-         else
-            msg.angular.z = angular_velocity;
-      }
-      else if (position_error > locomotionParameterData.position_tolerance)
-      {
-
-         mode = GOING;
-
-         /* if the robot has not reached the goal, adjust the distance */
-
-         if (debug)
-            printf("Going\n");
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         linear_velocity = locomotionParameterData.position_gain_dq * position_error;
-
-         if (linear_velocity < locomotionParameterData.min_linear_velocity)
-            linear_velocity = locomotionParameterData.min_linear_velocity;
-         else if (linear_velocity > locomotionParameterData.max_linear_velocity)
-            linear_velocity = locomotionParameterData.max_linear_velocity;
-
-         /* if stopped, ramp up to the required velocity ... don't attempt an infinite acceleration to the required velocity */
-
-         if (current_linear_velocity == 0)
-         {
-
-            for (int i = 1; i < number_of_ramp_up_steps; i++)
-            {
-                msg.linear.x = (double)linear_velocity * ((double)i / (double)number_of_ramp_up_steps);
-                msg.angular.z = 0;
-
-                if (debug)
-                {
-         printf("Ramping up velocity\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n", msg.linear.x, msg.angular.z);
-                }
-
-                pub.publish(msg); // Publish the message
-
-                rate.sleep(); // Wait until it's time for another iteration
-            }
-            current_linear_velocity = linear_velocity;
-         }
-
-         msg.linear.x = linear_velocity;
-         msg.angular.z = 0;
-      }
-
-      if (debug)
-      {
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      pub.publish(msg); // Publish the message
-
-      rate.sleep(); // Wait until it's time for another iteration
-
-   } while ((position_error > locomotionParameterData.position_tolerance) && ros::ok());
-
-   /* the robot has reached the destination so             */
-   /* adjust the orientation to match the goal orientation */
-
-   do
-   {
-
-      if (debug)
-         printf("Orienting\n");
-
-      /* get the current pose */
-
-      ros::spinOnce(); // Let ROS take over to handle the callback
-
-      angle_error = goal_theta - current_theta;
-
-      /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,            */
-      /* positive and negative. Thus it can eliminate any angular error by rotating Pi radian or less in the correct direction */
-      /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                 */
-
-      if (angle_error > PI)
-      {
-         angle_error = angle_error - 2 * PI;
-      }
-      else if (angle_error < -PI)
-      {
-         angle_error = angle_error + 2 * PI;
-      }
-
-      msg.linear.x = 0;
-
-      /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-      /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-      angular_velocity = locomotionParameterData.angle_gain_dq * angle_error;
-
-      if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-         msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-      else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-         msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-      else
-         msg.angular.z = angular_velocity;
-
-      if (debug)
-      {
-         printf("Orienting\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      if((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting)){
-
-         pub.publish(msg); // Publish the message
-
-         rate.sleep(); // Wait until it's time for another iteration
-      }
-
-   } while ((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) && ros::ok());
-
-   msg.linear.x = 0;
-   msg.angular.z = 0;
-
-   pub.publish(msg); // Publish the message
-   rate.sleep(); // Wait until it's time for another iteration
-
-
-}
-
-
 void stabilize_waist()
 {
     naoqi_bridge_msgs::JointAnglesWithSpeed msg;
@@ -2424,239 +1789,7 @@ void stabilize_waist_continuously()
     }
 }
 
-/**********************************************************************************************************************
 
-goToPoseMIMO
-
-Use the MIMO algorithm to drive the robot to a given position and then adjust orientation to achieve the required  pose
-
-***********************************************************************************************************************/
-
- void goToPoseMIMONew(double x, double y, double theta, locomotionParameterDataType locomotionParameterData, ros::Publisher pub, ros::Rate rate, bool waypoints)
- {
-
-   bool debug = false;
-
-   geometry_msgs::Twist msg;
-
-   // trajectory_msgs::JointTrajectory trajectory_msg;
-   // trajectory_msg.joint_names.push_back("HipPitch");
-   // trajectory_msg.joint_names.push_back("HipRoll");
-   // trajectory_msg.joint_names.push_back("KneePitch");
-
-   // trajectory_msgs::JointTrajectoryPoint trajectory_msg_point;
-   // trajectory_msg_point.positions.push_back(0.0);
-   // trajectory_msg_point.positions.push_back(0.0);
-   // trajectory_msg_point.positions.push_back(0.0);
-
-   // trajectory_msg_point.time_from_start = ros::Duration(0.5);
-
-   // trajectory_msg.points.push_back(trajectory_msg_point);
-
-    naoqi_bridge_msgs::JointAnglesWithSpeed pelvis_msg;
-   //  pelvis_msg.joint_names.push_back("HipRoll");
-   //  pelvis_msg.joint_angles.push_back(0.0);  // Set hip pitch to 0 (upright position)
-    pelvis_msg.joint_names.push_back("HipPitch");
-    pelvis_msg.joint_angles.push_back(0.0);  // Set hip roll to 0 (upright position)
-   //  pelvis_msg.joint_names.push_back("KneePitch");
-   //  pelvis_msg.joint_angles.push_back(0.0);  // Set knee pitch to 0 (upright position)
-    pelvis_msg.speed = 1.0;  // Adjust speed as needed
-    pelvis_msg.relative = 0;  // Absolute position
-
-
-   double start_x;
-   double start_y;
-   double start_theta;
-
-   double goal_x;
-   double goal_y;
-   double goal_theta;
-
-   double goal_direction;
-
-   double position_error;
-   double angle_error;
-
-   double angular_velocity;
-   double linear_velocity;
-
-   static double current_linear_velocity = 0; // make this static so that it's valid on the next call
-
-   int number_of_ramp_up_steps = 20;
-
-   goal_x = x;
-   goal_y = y;
-   goal_theta = theta;
-
-   do
-   {
-
-     /* get the current pose */
-
-     ros::spinOnce(); // Let ROS take over to handle the callback
-
-     position_error = sqrt((goal_x - current_x) * (goal_x - current_x) +
-                           (goal_y - current_y) * (goal_y - current_y));
-
-     goal_direction = atan2((goal_y - current_y), (goal_x - current_x));
-     angle_error = goal_direction - current_theta;
-
-     /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,            */
-     /* positive and negative. Thus it can eliminate any angular error by rotating Pi radian or less in the correct direction */
-     /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                 */
-
-     if (angle_error > PI)
-     {
-         angle_error = angle_error - 2 * PI;
-     }
-     else if (angle_error < -PI)
-     {
-         angle_error = angle_error + 2 * PI;
-     }
-
-     /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-     /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-     angular_velocity = locomotionParameterData.angle_gain_mimo * angle_error;
-
-     if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-         msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-     else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-         msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-     else
-         msg.angular.z = angular_velocity;
-
-     /* don't slow down if driving to a waypoint */
-
-     if (waypoints)
-     {
-         linear_velocity = locomotionParameterData.max_linear_velocity / 2;
-     }
-     else
-     {
-         linear_velocity = locomotionParameterData.position_gain_mimo * position_error;
-     }
-
-     if (linear_velocity < locomotionParameterData.min_linear_velocity)
-         msg.linear.x = locomotionParameterData.min_linear_velocity;
-     else if (linear_velocity > locomotionParameterData.max_linear_velocity)
-         msg.linear.x = locomotionParameterData.max_linear_velocity;
-
-     /* if currently stopped, ramp up to the required velocity ... don't attempt an infinite acceleration to the required velocity */
-
-     if (current_linear_velocity == 0)
-     {
-
-         for (int i = 1; i < number_of_ramp_up_steps; i++)
-         {
-      msg.linear.x = (double)linear_velocity * ((double)i / (double)number_of_ramp_up_steps);
-      msg.angular.z = 0;
-
-      if (debug)
-      {
-              printf("Ramping up velocity\n");
-              // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-              // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-              printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-              printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      navigation_pelvis_publisher.publish(pelvis_msg);
-      pub.publish(msg); // Publish the message
-      is_moving = true;
-      // navigation_pelvis_publisher.publish(trajectory_msg);
-
-      rate.sleep(); // Wait until it's time for another iteration
-         }
-         current_linear_velocity = linear_velocity;
-     }
-
-     msg.linear.x = linear_velocity;
-
-     if (debug)
-     {
-         printf("Going\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-     }
-
-      is_moving = true;
-      navigation_pelvis_publisher.publish(pelvis_msg);
-     pub.publish(msg); // Publish the message
-   //   navigation_pelvis_publisher.publish(trajectory_msg);
-
-     rate.sleep(); // Wait until it's time for another iteration
-
-   } while ((fabs(position_error) > locomotionParameterData.position_tolerance) && ros::ok());
-
-   /* for the final destination, adjust the orientation to match the goal pose */
-   /* ------------------------------------------------------------------------ */
-
-   if (!waypoints)
-   {
-
-     do
-     {
-
-         /* if the robot has reached the destination             */
-         /* adjust the orientation to match the goal orientation */
-
-         /* get the current pose */
-
-         ros::spinOnce(); // Let ROS take over to handle the callback
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         angle_error = goal_theta - current_theta;
-
-         current_linear_velocity = 0;
-         msg.linear.x = current_linear_velocity;
-
-         angular_velocity = locomotionParameterData.angle_gain_mimo * angle_error;
-
-         if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-      msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-         else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-      msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-         else
-      msg.angular.z = angular_velocity;
-
-         if (debug)
-         {
-      printf("Orienting\n");
-      // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-      // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-      printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-      printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-         }
-
-         is_moving = true;
-         navigation_pelvis_publisher.publish(pelvis_msg);
-         pub.publish(msg); // Publish the message
-         // navigation_pelvis_publisher.publish(trajectory_msg);
-
-         rate.sleep(); // Wait until it's time for another iteration
-
-     } while ((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) && ros::ok());
-
-      current_linear_velocity = 0;
-      msg.linear.x = current_linear_velocity;
-
-      angular_velocity = 0;
-      msg.angular.z = angular_velocity;
-
-      navigation_pelvis_publisher.publish(pelvis_msg);
-      pub.publish(msg); // Publish the message
-      is_moving = false;
-      // navigation_pelvis_publisher.publish(trajectory_msg);
-
-      rate.sleep(); // Wait until it's time for another iteration
-
-   }
- }
 
 
 void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType locomotionParameterData, ros::Publisher pub, ros::Rate rate, bool waypoints)
@@ -2851,199 +1984,6 @@ void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType 
 
    }
  }
-
-
-
-void goToPoseMIMOFunctional(double x, double y, double theta, locomotionParameterDataType locomotionParameterData, ros::Publisher pub, ros::Rate rate, bool waypoints)
- {
-
-   bool debug = false;
-
-   geometry_msgs::Twist msg;
-
-   double start_x;
-   double start_y;
-   double start_theta;
-
-   double goal_x;
-   double goal_y;
-   double goal_theta;
-
-   double goal_direction;
-
-   double position_error;
-   double angle_error;
-
-   double angular_velocity;
-   double linear_velocity;
-
-   static double current_linear_velocity = 0; // make this static so that it's valid on the next call
-
-   int number_of_ramp_up_steps = 20;
-
-   goal_x = x;
-   goal_y = y;
-   goal_theta = theta;
-
-   do
-   {
-
-     /* get the current pose */
-
-     ros::spinOnce(); // Let ROS take over to handle the callback
-
-     position_error = sqrt((goal_x - current_x) * (goal_x - current_x) +
-                           (goal_y - current_y) * (goal_y - current_y));
-
-     goal_direction = atan2((goal_y - current_y), (goal_x - current_x));
-     angle_error = goal_direction - current_theta;
-
-     /* The absolute error in direction can not be greater than Pi because the robot can rotate in two directions,            */
-     /* positive and negative. Thus it can eliminate any angular error by rotating Pi radian or less in the correct direction */
-     /* If the difference in directions is greater than +Pi, subtract  2 Pi; if it is less than -Pi, add 2 Pi                 */
-
-     if (angle_error > PI)
-     {
-         angle_error = angle_error - 2 * PI;
-     }
-     else if (angle_error < -PI)
-     {
-         angle_error = angle_error + 2 * PI;
-     }
-
-     /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-     /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-     angular_velocity = locomotionParameterData.angle_gain_mimo * angle_error;
-
-     if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-         msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-     else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-         msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-     else
-         msg.angular.z = angular_velocity;
-
-     /* don't slow down if driving to a waypoint */
-
-     if (waypoints)
-     {
-         linear_velocity = locomotionParameterData.max_linear_velocity / 2;
-     }
-     else
-     {
-         linear_velocity = locomotionParameterData.position_gain_mimo * position_error;
-     }
-
-     if (linear_velocity < locomotionParameterData.min_linear_velocity)
-         msg.linear.x = locomotionParameterData.min_linear_velocity;
-     else if (linear_velocity > locomotionParameterData.max_linear_velocity)
-         msg.linear.x = locomotionParameterData.max_linear_velocity;
-
-     /* if currently stopped, ramp up to the required velocity ... don't attempt an infinite acceleration to the required velocity */
-
-     if (current_linear_velocity == 0)
-     {
-
-         for (int i = 1; i < number_of_ramp_up_steps; i++)
-         {
-      msg.linear.x = (double)linear_velocity * ((double)i / (double)number_of_ramp_up_steps);
-      msg.angular.z = 0;
-
-      if (debug)
-      {
-              printf("Ramping up velocity\n");
-              // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-              // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-              printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-              printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-      }
-
-      pub.publish(msg); // Publish the message
-
-      rate.sleep(); // Wait until it's time for another iteration
-         }
-         current_linear_velocity = linear_velocity;
-     }
-
-     msg.linear.x = linear_velocity;
-
-     if (debug)
-     {
-         printf("Going\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-         printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-         printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-     }
-
-     pub.publish(msg); // Publish the message
-
-     rate.sleep(); // Wait until it's time for another iteration
-
-   } while ((fabs(position_error) > locomotionParameterData.position_tolerance) && ros::ok());
-
-   /* for the final destination, adjust the orientation to match the goal pose */
-   /* ------------------------------------------------------------------------ */
-
-   if (!waypoints)
-   {
-
-     do
-     {
-
-         /* if the robot has reached the destination             */
-         /* adjust the orientation to match the goal orientation */
-
-         /* get the current pose */
-
-         ros::spinOnce(); // Let ROS take over to handle the callback
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
-
-         angle_error = goal_theta - current_theta;
-
-         current_linear_velocity = 0;
-         msg.linear.x = current_linear_velocity;
-
-         angular_velocity = locomotionParameterData.angle_gain_mimo * angle_error;
-
-         if (fabs(angular_velocity) < locomotionParameterData.min_angular_velocity)
-      msg.angular.z = locomotionParameterData.min_angular_velocity * signnum(angular_velocity);
-         else if (fabs(angular_velocity) > locomotionParameterData.max_angular_velocity)
-      msg.angular.z = locomotionParameterData.max_angular_velocity * signnum(angular_velocity);
-         else
-      msg.angular.z = angular_velocity;
-
-         if (debug)
-         {
-      printf("Orienting\n");
-      // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-      // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
-      printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
-      printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
-         }
-
-         pub.publish(msg); // Publish the message
-
-         rate.sleep(); // Wait until it's time for another iteration
-
-     } while ((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) && ros::ok());
-
-      current_linear_velocity = 0;
-      msg.linear.x = current_linear_velocity;
-
-      angular_velocity = 0;
-      msg.angular.z = angular_velocity;
-
-      pub.publish(msg); // Publish the message
-
-      // rate.sleep(); // Wait until it's time for another iteration
-
-   }
- }
-
-
 /*
  *   Function to round a doubleing point number to a specified number of decimal places
  *

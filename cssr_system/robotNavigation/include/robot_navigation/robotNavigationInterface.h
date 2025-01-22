@@ -353,9 +353,9 @@ int extract_topic(string key, string topic_file_name, string *topic_name);
 void move_to_position(ControlClientPtr& client, const std::vector<std::string>& joint_names, double duration, 
                         bool open_hand, string hand, string hand_topic, 
                         const std::string& position_name, std::vector<double> positions);
-/* Read the overt attention configuration */
+/* Read the robot navigation configuration */
 /* 
- *   Function to read the overt attention configuration.
+ *   Function to read the robot navigation configuration.
  *   The configuration file contains the platform, camera, realignment threshold, x offset to head yaw, y offset to head pitch, simulator topics, robot topics, topics filename, and debug mode.
  *   The function reads the configuration file and sets the values for the specified parameters.
  * 

@@ -25,11 +25,11 @@
 
 * Key                   |     Value 
 * --------------------- |     -------------------
-* platform                    simulator
-* camera                      FrontCamera
-* realignmentThreshold        5
-* xOffsetToHeadYaw            25
-* yOffsetToHeadPitch          20
+* platform                    robot
+* environmentMap              scenarioOneEnvironmentMap.dat
+* configurationMap            scenarioOneConfigMap.dat
+* pathPlanning                astar
+* socialDistance              true
 * simulatorTopics             simulatorTopics.dat
 * robotTopics                 pepperTopics.dat
 * verboseMode                 true
@@ -66,25 +66,21 @@
 ...
 * Configuration Files
 *
-* overtAttentionConfiguration.ini
+* robotNavigationConfiguration.ini
 ...
 * Example Instantiation of the Module
 *
-* rosrun overtAttention overtAttention
-...
-*
-* The clients can call the service by providing the attention mode and the location to pay attention to in the world.
-* The service will execute the attention mode selected and attend to the location provided.
-* AN example of calling the service is shown below:
-* ----- rosservice call /overAttention/set_mode -- social 3.0 2.0 1.0
-* This will set the attention mode to social and the location to pay attention to is (3.0, 2.0, 1.0)
-*
+* rosrun cssr_system robotNavigation
 ...
 *
 * Author: Adedayo Akinade, Carnegie Mellon University Africa
 * Email: aakinade@andrew.cmu.edu
 * Date: September 3, 2024
 * Version: v1.0
+* Author: Birhanu Shimelis Girma, Carnegie Mellon University Africa
+* Email: bgirmash@andrew.cmu.edu
+* Date: January 7, 2025
+* Version: v1.1
 *
 */
 
@@ -163,12 +159,12 @@ bool set_goal(robot_navigation::set_goal::Request  &service_request, robot_navig
 
     if(x_start > (double) x_map_size/100 || y_start > (double) y_map_size/100){
         ROS_ERROR("Robot pose is outside the map");
-        service_response.navigation_goal_success = navigation_goal_success;                // Attention mode set to location successfully
+        service_response.navigation_goal_success = navigation_goal_success;               
         return true;
     }
     if(x_goal > (double) x_map_size/100 || y_goal > (double) y_map_size/100){
         ROS_ERROR("Goal location is outside the map");
-        service_response.navigation_goal_success = navigation_goal_success;                // Attention mode set to location successfully
+        service_response.navigation_goal_success = navigation_goal_success;               
         return true;
     }
 
@@ -185,7 +181,7 @@ bool set_goal(robot_navigation::set_goal::Request  &service_request, robot_navig
         write_robot_pose_input(robot_pose);     
     }
 
-    service_response.navigation_goal_success = navigation_goal_success;                // Attention mode set to location successfully
+    service_response.navigation_goal_success = navigation_goal_success;                
    
     // Print the response from the service
     ROS_INFO("Response from /robotNavigation/set_goal service: [%ld]\n", (long int)service_response.navigation_goal_success);
@@ -240,7 +236,7 @@ int main(int argc, char** argv) {
     FILE                 *fp_in;                    
     char                 path[MAX_FILENAME_LENGTH];
     char                 input_filename[MAX_FILENAME_LENGTH]                 = "moveToInput.txt";
-    char                 locomotion_parameter_filename[MAX_FILENAME_LENGTH]  = "parameters.txt";
+    char                 locomotion_parameter_filename[MAX_FILENAME_LENGTH]  = "parameters230.txt";
     char                 navigation_map_filename[MAX_FILENAME_LENGTH]         = "";
     char                 environment_map_filename[MAX_FILENAME_LENGTH]         = "";
     char                 navigation_pathway_filename[MAX_FILENAME_LENGTH]         = "";
@@ -273,7 +269,7 @@ int main(int argc, char** argv) {
     /* -------------------------------------------- */
 
     strcpy(path_and_input_filename, packagedir.c_str());  
-    strcat(path_and_input_filename, "/data/"); 
+    strcat(path_and_input_filename, "/robotNavigation/data/"); 
     strcat(path_and_input_filename, environment_map_file.c_str());
 
     mapImage = imread(path_and_input_filename, IMREAD_GRAYSCALE);
@@ -283,7 +279,7 @@ int main(int argc, char** argv) {
     /* -------------------------------------------- */
 
     strcpy(path_and_input_filename, packagedir.c_str());  
-    strcat(path_and_input_filename, "/data/"); 
+    strcat(path_and_input_filename, "/robotNavigation/data/"); 
     strcat(path_and_input_filename, configuration_map_file.c_str());
 
     configurationSpaceImage = imread(path_and_input_filename, IMREAD_GRAYSCALE);
@@ -304,7 +300,7 @@ int main(int argc, char** argv) {
     /* --------------------------------- */
 
     strcpy(path_and_input_filename, packagedir.c_str());  
-    strcat(path_and_input_filename, "/data/"); 
+    strcat(path_and_input_filename, "/robotNavigation/data/"); 
     strcat(path_and_input_filename, locomotion_parameter_filename);
     
     readLocomotionParameterData(path_and_input_filename, &locomotionParameterData);

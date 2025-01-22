@@ -1,3 +1,52 @@
+/* robotLocalizationApplication.cpp
+*
+* <detailed functional description>
+* The component tests the functionality of the localization of the robot using the ROS interface.
+* The test is performed by initializing the robot's position and orientation and checking if the
+* robot's localization system updates its state correctly. The test is performed in a continuous
+* loop, periodically logging the status of the localization system.
+
+...
+* Libraries
+* Standard libraries
+- std::string, std::vector, std::thread, std::fstream, std::cout, std::endl, std::cin, std::stod
+* ROS libraries
+- ros/ros.h, ros/package.h, geometry_msgs/PoseWithCovarianceStamped.h
+
+...
+* Parameters
+*
+* Command-line Parameters
+*
+* The initial position and orientation of the robot in x, y coordinates and theta (yaw) angle.
+...
+* Configuration File Parameters
+
+* Key                   |     Value 
+* --------------------- |     -------------------
+*platform                       robot
+camera                          FrontCamera
+resetInterval                   100
+robotTopics                     pepperTopics.dat
+simulatorTopics                 simulatorTopics.dat
+verboseMode                     false
+
+* Configuration Files
+*
+* robotLocalizationConfiguration.ini
+...
+* Example Instantiation of the Module
+*
+* rosrun cssr_system robotLocalization
+...
+*
+* Author: Birhanu Shimelis Girma, Carnegie Mellon University Africa
+* Email: bgirmash@andrew.cmu.edu
+* Date: September 7, 2024
+* Version: v1.0
+*
+*/
+
 #include "robotLocalization/robotLocalizationInterface.h"
 #include <ros/ros.h>
 

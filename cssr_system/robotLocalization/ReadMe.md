@@ -12,8 +12,8 @@ This guide provides concise instructions on how to:
 
 ## Prerequisites
 
-- **ROS Installed:** Ensure that ROS is properly installed on the system.
-- **Catkin Workspace:** The `robotLocalization` package should be placed within the catkin workspace. In this guide, we assume the workspace is located at `~/workspace/pepper_rob_ws`.
+- ROS Installed: Ensure that ROS is properly installed on the system.
+- Catkin Workspace: The `robotLocalization` package should be placed within the catkin workspace. In this guide, we assume the workspace is located at `~/workspace/pepper_rob_ws`.
 
 ---
 
@@ -73,7 +73,7 @@ To start the `robotLocalization` node, use the following command:
 rosrun robotlocalization robotLocalization
 ```
 
-- **Note:** Ensure that the node name matches the executable specified in the `CMakeLists.txt`. In this case, the executable is named `robotlocalization`.
+- Note: Ensure that the node name matches the executable specified in the `CMakeLists.txt`. In this case, the executable is named `robotlocalization`.
 
 ---
 
@@ -95,14 +95,14 @@ The `robotLocalization` node provides a service to reset the robot's pose to spe
 
 ### Service Details
 
-- **Service Name:** `/robotLocalization/reset_pose`
-- **Service Type:** `robotLocalization/SetPose`
+- Service Name: `/robotLocalization/reset_pose`
+- Service Type: `robotLocalization/SetPose`
 
 ### Resetting the Pose
 
 To reset the robot's pose to specific `x`, `y`, and `theta` values (with `theta` in degrees), execute:
 
-**Example:**
+Example:
 
 ```bash
 rosservice call /robotLocalization/reset_pose "{x: 2.0, y: 3.0, theta: 90.0}"
@@ -110,8 +110,20 @@ rosservice call /robotLocalization/reset_pose "{x: 2.0, y: 3.0, theta: 90.0}"
 
 This sets the robot's position to `(2.0, 3.0)` meters and orientation to `90` degrees.
 
-**Note:** The `theta` value should be provided in degrees. Internally, it will be converted to radians.
+Note: The `theta` value should be provided in degrees. Internally, it will be converted to radians.
 
----
 
-**Enjoy integrating the `robotLocalization` node!**
+
+
+Once the node is running, you can use the following commands to interact with it:
+``` bash
+rosservice call /robotLocalization/reset_pose 2.0 6.6 0.0
+```
+
+``` bash
+br@br:~/workspace/pepper_rob_ws$ rosrun cssr_system robotNavigation 
+```
+
+``` bash
+rosservice call /robotNavigation/set_goal 3.0 6.6 0.0
+```
