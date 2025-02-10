@@ -1,5 +1,10 @@
-# RobotLocalization Node Usage Guide
+<div align="center">
+  <img src="CSSR4AfricaLogo.svg" alt="CSSR4Africa Logo" style="width:50%; height:auto;">
+</div>
 
+<div align="center">
+  <h1>Robot Localization Node Usage Guide</h1>
+</div>
 This guide provides concise instructions on how to:
 
 - Install necessary dependencies
@@ -25,19 +30,6 @@ The `robotLocalization` package should be located in:
 ~/workspace/pepper_rob_ws/src/robotlocalization
 ```
 
-The directory structure should include the following key files and directories:
-
-- `CMakeLists.txt`
-- `package.xml`
-- `src/robotlocalization.cpp`
-- `srv/SetPose.srv`
-- `launch/robot_localization.launch`
-- `config/robotLocalizationConfiguration.ini`
-- `data/pepperTopics.dat`
-- `data/simulatorTopics.dat`
-
----
-
 ## Step 1: Install Necessary Dependencies
 
 Navigate to the catkin workspace and install any missing dependencies using `rosdep`:
@@ -54,13 +46,13 @@ rosdep install --from-paths src --ignore-src -r -y
 Build the workspace to compile the `robotLocalization` package:
 
 ```bash
-catkin_make
+br@br:~/workspace/pepper_rob_ws$ catkin_make
 ```
 
 After building, source the workspace to update the environment:
 
 ```bash
-source devel/setup.bash
+br@br:~/workspace/pepper_rob_ws$ source devel/setup.bash
 ```
 
 ---
@@ -70,7 +62,7 @@ source devel/setup.bash
 To start the `robotLocalization` node, use the following command:
 
 ```bash
-rosrun robotlocalization robotLocalization
+br@br:~/workspace/pepper_rob_ws$ rosrun cssr_system robotLocalization
 ```
 
 - Note: Ensure that the node name matches the executable specified in the `CMakeLists.txt`. In this case, the executable is named `robotlocalization`.
@@ -82,7 +74,7 @@ rosrun robotlocalization robotLocalization
 The node publishes the robot's pose on the `/robotLocalization/pose` topic. To view the pose data in real-time:
 
 ```bash
-rostopic echo /robotLocalization/pose 
+br@br:~/workspace/pepper_rob_ws$ rostopic echo /robotLocalization/pose 
 ```
 
 This command displays the `x`, `y`, and `theta` (orientation) values of the robot's pose.
@@ -102,28 +94,26 @@ The `robotLocalization` node provides a service to reset the robot's pose to spe
 
 To reset the robot's pose to specific `x`, `y`, and `theta` values (with `theta` in degrees), execute:
 
-Example:
-
 ```bash
-rosservice call /robotLocalization/reset_pose "{x: 2.0, y: 3.0, theta: 90.0}"
+br@br:~/workspace/pepper_rob_ws$ rosservice call /robotLocalization/reset_pose 2.0 6.6 0.0
 ```
 
-This sets the robot's position to `(2.0, 3.0)` meters and orientation to `90` degrees.
+This sets the robot's position to `(2.0, 6.6)` meters and orientation to `0` degrees.
 
 Note: The `theta` value should be provided in degrees. Internally, it will be converted to radians.
 
 
-
-
-Once the node is running, you can use the following commands to interact with it:
-``` bash
-rosservice call /robotLocalization/reset_pose 2.0 6.6 0.0
-```
-
 ``` bash
 br@br:~/workspace/pepper_rob_ws$ rosrun cssr_system robotNavigation 
 ```
-
+---
+## Step 6: Using the Navigation Node
 ``` bash
-rosservice call /robotNavigation/set_goal 3.0 6.6 0.0
+To set a navigation goal using the service `/robotNavigation/set_goal`, execute:
+
+```
+br@br:~/workspace/pepper_rob_ws$ rosservice call /robotNavigation/set_goal 5.0 6.6 0.0
+```
+
+This command sends the robot to position `(5.0, 6.6)` with orientation `0` degrees.
 ```

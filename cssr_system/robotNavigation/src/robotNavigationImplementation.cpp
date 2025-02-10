@@ -1,5 +1,3 @@
-
-
 #include "robot_navigation/robotNavigationInterface.h"
 
 // Directory where the package is located
@@ -12,12 +10,12 @@ std::vector<double> robot_pose = {0.0, 0.0, 0.0};
 bool waypointFlag;
 
 // Configuration parameters
-std::string implementation_platform;
+//std::string implementation_platform;    //removed to stop simulator support
 std::string environment_map_file;
 std::string configuration_map_file;
 int path_planning_algorithm;
 bool social_distance_mode;
-std::string simulator_topics;
+//std::string simulator_topics;    //removed to stop simulator support
 std::string robot_topics;
 string topics_filename;
 bool verbose_mode;
@@ -47,11 +45,6 @@ geometry_msgs::Twist msg;
 
 std::vector<double> leg_home_position = {0.0, 0.0, 0.0};  // Hip pitch, hip roll, knee pitch
 std::vector<double> head_home_position = {0.0, 0.0};   // Head pitch and yaw
-// Mat images to display the maps
-// Mat mapImage;
-// Mat mapImageColor;
-// Mat mapImageLarge;
-// Mat configurationSpaceImage;
 
 std::vector<std::vector<int>> graph;  // Graph to store the map
 std::vector<int> robot_path; // Path to store the path
@@ -64,15 +57,7 @@ int directions_4_way[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 // 8-way movement (Dijkstra, A*)
 int directions_8_way[8][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
-
-/* 
- *   Function to read the the robot pose from an input file
- * @param:
- *   robot_pose_input: vector to store the robot pose
- *
- * @return:
- *    None
- */
+// Function to read the robot pose input
 void read_robot_pose_input(std::vector<double>& robot_pose_input){
     bool debug_mode = false;   // used to turn debug message on
 
@@ -148,15 +133,7 @@ void read_robot_pose_input(std::vector<double>& robot_pose_input){
         printf("\tTheta: %.2f\n", robot_pose_input[2]);
     }
 }
-
-/* 
- *   Function to read the the robot pose from an input file
- * @param:
- *   robot_pose_input: vector to store the robot pose
- *
- * @return:
- *    None
- */
+// Function to write the robot pose input
 void write_robot_pose_input(std::vector<double>& robot_pose_input){
     bool debug_mode = false;   // used to turn debug message on
 
@@ -203,18 +180,7 @@ void write_robot_pose_input(std::vector<double>& robot_pose_input){
       data_of.close();
 }
 
-/*  
- *   Function to extract the topic from the topics file
- *   The function reads the topics file and extracts the topic for the specified key.
- *
- *   @param:
- *       key: the key to search for in the topics file
- *       topic_file_name: the topics filename
- *       topic_name: the topic name extracted
- *
- *   @return:
- *       0 if successful, 1 otherwise
- */
+// Function to extract the topic name from the topics file
 int extract_topic(string key, string topic_file_name, string *topic_name){
     bool debug = false;   // used to turn debug message on
     
@@ -272,23 +238,7 @@ int extract_topic(string key, string topic_file_name, string *topic_name){
     return 0;
 }
 
-/*  
- *   Function to move an actuator to a position when using linear interpolation
- *   The actuator is moved using the control client to the specified position
- *
- *   @param:
- *       client: the control client for the actuator
- *       joint_names: vector containing the joint names of the actuator
- *       duration: the duration of the movement
- *       open_hand: boolean to indicate if the hand should be open
- *       hand: the hand to be opened
- *       hand_topic: the topic for the hand
- *       position_name: the name of the position
- *       positions: vector containing the joint angles of the position to move the actuator to
- *
- *   @return:
- *       None
- */
+// Function to move the actuator to the specified position
 void move_to_position(ControlClientPtr& client, const std::vector<std::string>& joint_names, double duration, 
                         bool open_hand, string hand, string hand_topic, 
                         const std::string& position_name, std::vector<double> positions){
@@ -319,8 +269,8 @@ void move_to_position(ControlClientPtr& client, const std::vector<std::string>& 
     return;
 }
 
-
-int read_configuration_file(string* platform, string* environment_map_file, string* configuration_map_file, int* path_planning_algorithm, bool* social_distance_mode, string* simulator_topics, string* robot_topics, string* topics_filename, bool* debug_mode){
+// Function to read the robot navigation configuration
+int read_configuration_file(string* environment_map_file, string* configuration_map_file, int* path_planning_algorithm, bool* social_distance_mode, string* robot_topics, bool* debug_mode){
     std::string config_file = "robotNavigationConfiguration.ini";       // data filename
     std::string config_path;                                            // data path
     std::string config_path_and_file;                                   // data path and filename
@@ -372,19 +322,8 @@ int read_configuration_file(string* platform, string* environment_map_file, stri
         std::getline(iss, param_value);
         iss >> param_value;
         trim(param_value);
-        // printf("paramKey: %s; paramValue: %s\n", paramKey.c_str(), paramValue.c_str());
         
-        if (param_key == platform_key){ 
-            boost::algorithm::to_lower(param_value); // modifies string to lower case
-            platform_value = param_value;
-            *platform = param_value;
-            if(platform_value != "robot" && platform_value != "simulator"){
-                printf("Platform value not supported. Supported values are: robot and simulator\n");
-                return 1;
-            }
-        }
-        
-        else if (param_key == environment_map_file_key){ 
+        if (param_key == environment_map_file_key){ 
             environment_map_file_value = param_value;
             *environment_map_file = param_value;
         }
@@ -427,11 +366,6 @@ int read_configuration_file(string* platform, string* environment_map_file, stri
             }
         }
 
-        else if (param_key == simulator_topics_key){ 
-            simulator_topics_value = param_value;
-            *simulator_topics = param_value;
-        }
-
         else if (param_key == robot_topics_key){ 
             robot_topics_value = param_value;
             *robot_topics = param_value;
@@ -453,30 +387,21 @@ int read_configuration_file(string* platform, string* environment_map_file, stri
         }
     }
     data_if.close();
-
-    if(*platform == "" || *environment_map_file == "" || *configuration_map_file == "" || *simulator_topics == "" || *robot_topics == ""){
+    
+    if(*environment_map_file == "" || *configuration_map_file == "" || *robot_topics == ""){
         printf("Unable to find a valid configuration. Verify you have values in the configuration.\n");
         return 1;
     }
-
-    if (platform_value == "robot"){
-        *topics_filename = *robot_topics;
-    }
-    else if(platform_value == "simulator"){
-        *topics_filename = *simulator_topics;
-    }
-
-    return 0;
 }
 
 /* Print the robot navigation configuration */
-void print_configuration(string platform, string environment_map_file, string configuration_map_file, int path_planning_algorithm, bool social_distance_mode, string simulator_topics, string robot_topics, string topics_filename, bool debug_mode){
-    printf("Platform: %s\n", platform.c_str());
+void print_configuration(string environment_map_file, string configuration_map_file, int path_planning_algorithm, bool social_distance_mode, string robot_topics, bool debug_mode){
+    // printf("Platform: %s\n", platform.c_str());
     printf("Environment Map File: %s\n", environment_map_file.c_str());
     printf("Configuration Map File: %s\n", configuration_map_file.c_str());
     printf("Path Planning Algorithm: %s\n", path_planning_algorithm == BFS_ALGORITHM ? "BFS" : path_planning_algorithm == DIJKSTRA_ALGORITHM ? "Dijsktra" : "A*");
     printf("Social Distance Mode: %s\n", social_distance_mode ? "true" : "false");
-    printf("Simulator Topics: %s\n", simulator_topics.c_str());
+    // printf("Simulator Topics: %s\n", simulator_topics.c_str());
     printf("Robot Topics: %s\n", robot_topics.c_str());
     printf("Topics Filename: %s\n", topics_filename.c_str());
     printf("Debug Mode: %s\n", debug_mode ? "true" : "false");
@@ -907,9 +832,7 @@ void compute_waypoints(std::vector<int>& robot_path, std::vector<pointType>& val
     if(i < valid_path.size()){
         valid_orientation = path_orientation(valid_path, i);
         valid_waypoints.push_back({valid_path[i].x, valid_path[i].y, valid_orientation});
-    }
-
-    
+    }    
 
     int j;
     for(int i = 0; i < valid_waypoints.size()-1; i++){
@@ -925,9 +848,6 @@ void compute_waypoints(std::vector<int>& robot_path, std::vector<pointType>& val
             valid_waypoints.pop_back();
         }
     }
-
-    // Print waypoints
-    // print_waypoints(valid_waypoints, room_width, room_height, image_width, image_height);
 }
 
 
@@ -937,10 +857,6 @@ void print_waypoints(std::vector<waypointType>& valid_waypoints, double room_wid
         double world_x;
         double world_y;
         convert_pixel_to_world(valid_waypoints[i].x, valid_waypoints[i].y, world_x, world_y, room_width, room_height, image_width, image_height);
-      //   double world_x = (valid_waypoints[i].x) * (room_width / image_width);
-        // double world_y = room_height - (valid_waypoints[i].y) * (room_height / image_height); // Invert Y for world coordinates
-
-        // ROS_INFO("Path Point: (%.2f, %.2f)", world_x, world_y);
         ROS_INFO("Waypoint %d: x = %.2f, y = %.2f, theta = %.2f\n", i, world_x, world_y, valid_waypoints[i].theta);
     }
 }
@@ -1157,11 +1073,6 @@ int plan_robot_path(double start_x, double start_y, double start_theta, double g
     x_goal_map = y_map_size - (int) (goal_y * 100);   // NB: convert to cm and change frame of reference
     y_goal_map = (int) (goal_x * 100);                //
 
-
-   //  // Obtain the vertex number of the start and goal cells
-   //  robot = vertex_number(x_start_map, y_start_map, x_map_size);
-   //  goal  = vertex_number(x_goal_map,  y_goal_map,  x_map_size);
-
     robot = start_pixel_y * image_width + start_pixel_x;
     goal = end_pixel_y * image_width + end_pixel_x;
 
@@ -1273,22 +1184,22 @@ int navigate_to_goal(double start_x, double start_y, double start_theta, double 
       if(debug){
          printf("Path found from (%5.3f %5.3f %5.3f) to (%5.3f %5.3f %5.3f)\n", start_x, start_y, degrees(start_theta), goal_x, goal_y, degrees(goal_theta));
          // print_waypoints(valid_waypoints, room_width, room_height, image_width, image_height);
-      }
+      }     
+
       robot_moved = move_robot(start_x, start_y, start_theta, goal_x, goal_y, goal_theta, velocity_publisher, rate, debug);
-   }
+      // If robot reached the goal
+      if (robot_moved == 1) {
+          ROS_INFO("Goal reached successfully!");
+      }
+    }
+        else 
+        {
+            ROS_ERROR("No valid path found!");
+        }
+   
    return robot_moved;
 }
 
-/*  
- *   Function to create a control client
- *   The function creates a control client for the specified topic.
- *
- *   @param:
- *       topic_name: the topic name
- *
- *   @return:
- *       the control client
- */
 ControlClientPtr create_client(const std::string& topic_name) {
     // Create a new action client
     ControlClientPtr actionClient(new ControlClient(topic_name, true));
@@ -1305,22 +1216,6 @@ ControlClientPtr create_client(const std::string& topic_name) {
     return nullptr;                                                     // return nullptr if the server is not available
 }
 
-
-
-/* 
- *   Function to return all joints of an actuator to the home position.
- *   This function is called on only one actuator at a time.
- *   It used the global variable set above for the home positions of the actuators.
- *
- * @param:
- *   actuator: string indicating the actuator to move to the home position
- *   topics_filename: string indicating the topics filename
- *   interpolation: integer indicating the interpolation type
- *   debug: boolean indicating the debug mode
- *
- * @return:
- *   None
- */
 int go_to_home(std::string actuator, std::string topics_filename, bool debug){
     // ros::Duration(0.5).sleep(); // Wait for one second to ensure that the joint states are updated
     std::vector<double> actuator_state;                             // stores the current state of the actuator joints
@@ -1378,35 +1273,8 @@ int go_to_home(std::string actuator, std::string topics_filename, bool debug){
 
     return 1;
 
-
 }
 
-/*********************************************************************************
-
-setOdometryPose
-
-Initialize the pose returned by the callback that services the subscription to the odom topic         
-                                                                                                       
-Odometry provides relative position orientation. Since we can't assume what odometry data is published
-on the odom topic on start up, we use two extra sets of variables for the x, y, and theta values:     
-adjustment variables and current variables.                                                           
-                                                                                                      
-We set the values of the adjustment variables to be the difference between                            
-
-(a) the values associated with the start pose, and                                                    
-(b) the values published on the odom topic on start up (or whenever we reinitialize the odometry),    
-                                                                                                      
-The callback then sets the values of the current variables as follows.
-
-- the current x and y values are set to the sum of the adjustment x and y values and the odom x and y values 
-  (this effectively translates the odom x and y values by the adjustment x and y values) 
-
-- these translated values are then rotated about the Z axis by an angle equal to the difference 
-  between the start theta value  and the odom theta value
-
-- the current theta value is set to be the sum of the adjustment theta value and the odom theta value                                                            
-
-**********************************************************************************/
 
 void setOdometryPose(double x, double y, double theta)
 {
@@ -1425,9 +1293,6 @@ void setOdometryPose(double x, double y, double theta)
    adjustment_x = x - odom_x;
    adjustment_y = y - odom_y;
    adjustment_theta = theta - odom_theta;
-
-   // sleep(1); // allow time for adjusted  messages to be published on the odom topic
-   // ros::spinOnce();
 
    if (debug)
    {
@@ -1454,16 +1319,7 @@ int move_robot(double start_x, double start_y, double start_theta, double goal_x
       printf("No physical robot present\n");
       return 0;
    }
-
-   /* initialize the odometry */
-
-//    setOdometryPose(start_x, start_y, start_theta);
-   // ros::spin();
    
-   /* 
-      Compute the waypoints in robot frame of reference and navigate using MIMO
-      Set waypointFlag to true so as to ensure that robot doesn't stop at waypoints and not worry about goal orientation yet
-    */
    waypointFlag = true;
 
    convert_pixel_to_world(valid_waypoints[0].x, valid_waypoints[0].y, x_waypoint, y_waypoint, room_width, room_height, image_width, image_height);
@@ -1643,8 +1499,6 @@ void goToPoseDQ(double x, double y, double theta, locomotionParameterDataType lo
                 if (debug)
                 {
          printf("Ramping up velocity\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
          printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
          printf("velocity command:     %5.3f, %5.3f\n", msg.linear.x, msg.angular.z);
                 }
@@ -1662,8 +1516,6 @@ void goToPoseDQ(double x, double y, double theta, locomotionParameterDataType lo
 
       if (debug)
       {
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
          printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
          printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
       }
@@ -1720,8 +1572,6 @@ void goToPoseDQ(double x, double y, double theta, locomotionParameterDataType lo
       if (debug)
       {
          printf("Orienting\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
          printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
          printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
       }
@@ -1744,7 +1594,6 @@ void goToPoseDQ(double x, double y, double theta, locomotionParameterDataType lo
 
 }
 
-
 void stabilize_waist()
 {
     naoqi_bridge_msgs::JointAnglesWithSpeed msg;
@@ -1759,21 +1608,6 @@ void stabilize_waist()
 
     navigation_pelvis_publisher.publish(msg);
 
-      // trajectory_msgs::JointTrajectory trajectory_msg;
-      // trajectory_msg.joint_names.push_back("HipPitch");
-      // trajectory_msg.joint_names.push_back("HipRoll");
-      // trajectory_msg.joint_names.push_back("KneePitch");
-
-      // trajectory_msgs::JointTrajectoryPoint trajectory_msg_point;
-      // trajectory_msg_point.positions.push_back(-0.5);
-      // trajectory_msg_point.positions.push_back(0.0);
-      // trajectory_msg_point.positions.push_back(0.0);
-
-      // trajectory_msg_point.time_from_start = ros::Duration(0.5);
-
-      // trajectory_msg.points.push_back(trajectory_msg_point);
-
-      // navigation_pelvis_publisher.publish(trajectory_msg);
 }
 
 void stabilize_waist_continuously()
@@ -1893,8 +1727,6 @@ void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType 
       if (debug)
       {
               printf("Ramping up velocity\n");
-              // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-              // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
               printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
               printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
       }
@@ -1911,8 +1743,6 @@ void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType 
      if (debug)
      {
          printf("Going\n");
-         // printf("Current pose:         %5.3f %5.3f %5.3f\n", current_x, current_y, current_theta);
-         // printf("Goal, heading, theta: %5.3f, %5.3f, %5.3f\n", goal_theta, goal_direction, current_theta);
          printf("Error:                %5.3f, %5.3f\n", position_error, angle_error);
          printf("velocity command:     %5.3f, %5.3f\n\n", msg.linear.x, msg.angular.z);
      }
@@ -1932,16 +1762,7 @@ void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType 
 
       while ((fabs(angle_error) > locomotionParameterData.angle_tolerance_orienting) && ros::ok())
      {
-
-         /* if the robot has reached the destination             */
-         /* adjust the orientation to match the goal orientation */
-
-         /* get the current pose */
-
          ros::spinOnce(); // Let ROS take over to handle the callback
-
-         /* set linear and angular velocities, taking care not to use values that exceed maximum values */
-         /* or use values that are less than minimum values needed to produce a response in the robot   */
 
          angle_error = goal_theta - current_theta;
 
@@ -1984,16 +1805,7 @@ void goToPoseMIMO(double x, double y, double theta, locomotionParameterDataType 
 
    }
  }
-/*
- *   Function to round a doubleing point number to a specified number of decimal places
- *
- *  @param:
- *     value: the value to be rounded
- *     decimal_places: the number of decimal places
- *  @return:
- *     the rounded value
- * 
- */
+
 double round_floating_point(double value, int decimal_places){
    double rounded_value = 0.0;
 
@@ -2006,63 +1818,25 @@ double round_floating_point(double value, int decimal_places){
    return rounded_value;
 
 }
- /* 
- *   Function to convert radians to degrees
- *   This function converts the angle in radians to degrees
- *
- * @param:
- *   radians: the angle in radians
- *
- * @return:
- *   the angle in degrees
- */
+
 double degrees(double radians)
 {
     double degrees = radians * (double) 180.0 / (double) M_PI; // David Vernon ... cast to double
     return degrees;
 }
 
-/* 
- *   Function to convert degrees to radians
- *   This function converts the angle in degrees to radians
- *
- * @param:
- *   degrees: the angle in degrees
- *
- * @return:
- *   the angle in radians
- */
 double radians(double degrees)
 {
     double radians = degrees / ((double) 180.0 / (double) M_PI); // David Vernon ... cast to double
     return radians;
 }
 
-
-/*  
- *   Function to prompt the user to press any key to exit the program
- *
- *   @param:
- *       status: the status of the program
- *
- *   @return:
- *       None
- */
 void prompt_and_exit(int status){
     printf("Press any key to exit ... \n");
     getchar();
     exit(status);
 }
 
-/*  
- *   Function to prompt the user to press any key to continue or press X to exit the program
- *
- *   @param:
- *       None
- *
- *   @return:
- *       None
- */
 void prompt_and_continue(){
     printf("Press X to quit or Press any key to continue...\n");
     char got_char = getchar();
@@ -2142,9 +1916,6 @@ void move_robot_actuators_to_default(){
                      right_arm_client, right_arm_joint_names, right_arm_position, 
                      leg_client, leg_joint_names, leg_position, 
                      gesture_duration);
-
-    // Move the head to the specified position
-      // move_one_actuator_to_position(head_client, head_joint_names, gesture_duration, head_position);
 
 }
 

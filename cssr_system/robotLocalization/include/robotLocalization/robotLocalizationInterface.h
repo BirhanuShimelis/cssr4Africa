@@ -13,7 +13,7 @@
 #include <opencv2/opencv.hpp>
 #include <map>
 #include <string>
-#include "robot_localization/SetPose.h"
+#include "cssr_system/SetPose.h"
 
 class RobotLocalization {
 public:
@@ -33,7 +33,7 @@ private:
     void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
     void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
     void imageCallback(const sensor_msgs::ImageConstPtr& msg);
-    bool resetPoseService(robot_localization::SetPose::Request& req, robot_localization::SetPose::Response& res);
+    bool resetPoseService(cssr_system::SetPose::Request& req, cssr_system::SetPose::Response& res);
 
     std::string trim(const std::string& str);
 

@@ -1,11 +1,9 @@
 /* robotNavigationApplication.cpp
 *
 * <detailed functional description>
-* The component test the functionality of the actuator of the robot using the ROS interface.
-* The test is performed by sending commands to the robot and checking if the robot performs the
-* expected action. The test is performed in two modes: sequential and parallel. In the sequential
-* mode, the tests are performed one after the other. In the parallel mode, the tests are performed
-* simultaneously. 
+* This module is responsible for navigating the robot to a goal location in the environment map using a path planning algorithm.
+* The module reads the robot pose input and the goal location from the service request and navigates the robot to the goal location.
+* The module uses the path planning algorithm to find the shortest path to the goal location.
 
 ...
 * Libraries
@@ -25,12 +23,10 @@
 
 * Key                   |     Value 
 * --------------------- |     -------------------
-* platform                    robot
 * environmentMap              scenarioOneEnvironmentMap.dat
 * configurationMap            scenarioOneConfigMap.dat
 * pathPlanning                astar
 * socialDistance              true
-* simulatorTopics             simulatorTopics.dat
 * robotTopics                 pepperTopics.dat
 * verboseMode                 true
 
@@ -86,20 +82,6 @@
 
 #include "robot_navigation/robotNavigationInterface.h"
 
-/* Global variables */
-
-// // Configuration parameters
-// std::string implementation_platform;
-// std::string environment_map_file;
-// std::string configuration_map_file;
-// int path_planning_algorithm;
-// bool social_distance_mode;
-// std::string simulator_topics;
-// std::string robot_topics;
-// string topics_filename;
-// bool verbose_mode;
-
-// // Publisher for the velocity commands
 
 
 double                x;
@@ -117,12 +99,10 @@ double                y_goal;
 double                theta_goal;
 
 Mat mapImage;
-// Mat mapImageColor;
-// Mat mapImageLarge;
 Mat configurationSpaceImage;
 
 /* This defines the callback function for the /robotNavigation/set_goal service */
-bool set_goal(robot_navigation::set_goal::Request  &service_request, robot_navigation::set_goal::Response &service_response){
+bool set_goal(cssr_system::set_goal::Request  &service_request, cssr_system::set_goal::Response &service_response){
     // Extract request parameters
     x_goal = service_request.goal_x;
     y_goal = service_request.goal_y;
@@ -133,23 +113,6 @@ bool set_goal(robot_navigation::set_goal::Request  &service_request, robot_navig
     y_goal = round_floating_point(y_goal, 1);
 
     int navigation_goal_success = 0;                         // Stores the status of the navigation goal
-    // Open the Environment and COnfiguration Map
-
-    // Plan the path on the configuration map -- Compute the waypoints
-
-    //Navigate to goal location -- Set odometry to current pose
-
-    // Check robot localization value and compare with goal location -- Return true if they match within some tolerance
-
-    // read_robot_pose_input(robot_pose);       //Replace with subscriber to /robotLocalization/pose topic
-
-    // // Retrieve the robot pose values s the start location
-    // x_start = robot_pose[0];
-    // x_start = round_floating_point(x_start, 1);
-    // y_start = robot_pose[1];
-    // y_start = round_floating_point(y_start, 1);
-    // theta_start = robot_pose[2];
-    // theta_start = radians(theta_start); // Convert the angle to radians
     
     x_start = current_x;
     x_start = round_floating_point(x_start, 1);
@@ -171,10 +134,6 @@ bool set_goal(robot_navigation::set_goal::Request  &service_request, robot_navig
     navigation_goal_success = navigate_to_goal(x_start, y_start, theta_start, x_goal, y_goal, theta_goal, path_planning_algorithm, mapImage, configurationSpaceImage, navigation_velocity_publisher, verbose_mode);
 
     if(navigation_goal_success == 1){
-        //Remove this after robotLOcalization is implemented
-        // robot_pose[0] = x_goal;
-        // robot_pose[1] = y_goal;
-        // robot_pose[2] = degrees(theta_goal);
         robot_pose[0] = current_x;
         robot_pose[1] = current_y;
         robot_pose[2] = degrees(current_theta);
@@ -198,8 +157,8 @@ int main(int argc, char** argv) {
 
     // Read the configuration file
     int config_file_read = 0;
-    config_file_read = read_configuration_file(&implementation_platform, &environment_map_file, &configuration_map_file, &path_planning_algorithm, &social_distance_mode, &simulator_topics, &robot_topics, &topics_filename, &verbose_mode);
-    print_configuration(implementation_platform, environment_map_file, configuration_map_file, path_planning_algorithm, social_distance_mode, simulator_topics, robot_topics, topics_filename, verbose_mode);
+    config_file_read = read_configuration_file(&environment_map_file, &configuration_map_file, &path_planning_algorithm, &social_distance_mode, &robot_topics, &verbose_mode);
+    print_configuration( environment_map_file, configuration_map_file, path_planning_algorithm, social_distance_mode, robot_topics, verbose_mode);
     
     // Check if the configuration file was read successfully
     if(config_file_read == 1){
@@ -212,7 +171,7 @@ int main(int argc, char** argv) {
 
     std::string wheels_topic;     // stores the wheels topic
     // Extract the topic for the wheels
-    if(extract_topic("Wheels", topics_filename, &wheels_topic)){
+    if(extract_topic("Wheels", robot_topics, &wheels_topic)){
         ROS_ERROR("Error extracting the wheels topic\n");
         return 0;
     }
@@ -221,15 +180,6 @@ int main(int argc, char** argv) {
     // navigation_pelvis_publisher = nh.advertise<trajectory_msgs::JointTrajectory>("/pepper_dcm/Pelvis_controller/command", 1000, true);
     navigation_pelvis_publisher = nh.advertise<naoqi_bridge_msgs::JointAnglesWithSpeed>("/joint_angles", 1000, true);
 
-    // Start waist stabilization thread
-    // std::thread waist_stabilization_thread(stabilize_waist_continuously);
-
-    // mapImage = imread("/home/cssr4a/workspace/pepper_rob_ws/src/cssr4africa/robot_navigation/data/scenarioOneEnvironmentMap.dat", IMREAD_GRAYSCALE);
-
-    // namedWindow(mapWindowName, WINDOW_AUTOSIZE);// create the window
-
-    // imshow(mapWindowName, mapImage); // Display map image
-    // waitKey(10000);
 
     bool                 debug = true;
    
@@ -252,17 +202,12 @@ int main(int argc, char** argv) {
     if (debug) printf("Subscribing to odom\n");
     // ros::Subscriber sub = nh.subscribe("/naoqi_driver/odom", 1, &odomMessageReceived);   
     ros::Subscriber sub = nh.subscribe("/robotLocalization/pose", 1, &poseMessageReceived);
-     
-
-    // /* open the input file and read the data */
-    // /* ===================================== */
 
 
     // /* construct the full path and filename */
     // /* ------------------------------------ */
     
     packagedir = ros::package::getPath(ROS_PACKAGE_NAME); // get the package directory
-
 
 
     /* get the dimensions of the environment map in centimeters */

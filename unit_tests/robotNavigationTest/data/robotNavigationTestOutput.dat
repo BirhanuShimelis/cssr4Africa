@@ -1,0 +1,518 @@
+All tests PASSED successfully!
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[==========] 5 tests from 1 test suite ran. (21285 ms total)
+[  PASSED  ] 5 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:206 - Value of: robot_moving
+  Actual: false
+Expected: true
+Robot is NOT moving along a planned path!
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:220 - Expected: (error) < (0.1), actual: 7.7175125526298949 vs 0.1
+Localization error exceeded 0.1m!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (36351 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:265 - Expected: (error) < (0.1), actual: 7.7175125526298949 vs 0.1
+Localization error exceeded 0.1m!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (33028 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:265 - Expected: (error) < (0.3), actual: 8.2800966177937809 vs 0.3
+Localization error exceeded 0.1m!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (35251 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:265 - Expected: (error) < (0.3), actual: 8.2800966177937809 vs 0.3
+Localization error exceeded 0.1m!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (33500 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:265 - Expected: (error) < (0.15), actual: 5.6993338398640017 vs 0.15
+Localization error exceeded 0.15m!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (34031 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (32707 ms total)
+[  PASSED  ] 6 tests.
+[  FAILED  ] 1 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:212 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (32529 ms total)
+[  PASSED  ] 6 tests.
+[  FAILED  ] 1 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:113 - Value of: reached_goal
+  Actual: false
+Expected: true
+Robot did not reach the goal within timeout!
+
+[  FAILED  ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:226 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (71965 ms total)
+[  PASSED  ] 5 tests.
+[  FAILED  ] 2 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:189 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (33944 ms total)
+[  PASSED  ] 6 tests.
+[  FAILED  ] 1 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:89 - Value of: set_goal_client.call(srv)
+  Actual: false
+Expected: true
+Failed to call /robotNavigation/set_goal service!
+
+[  FAILED  ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:154 - Value of: set_goal_client.call(srv)
+  Actual: false
+Expected: true
+Failed to call service!
+
+[  FAILED  ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:179 - Value of: client.call(srv)
+  Actual: false
+Expected: true
+Failed to call /robotNavigation/set_goal service!
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (126824 ms total)
+[  PASSED  ] 4 tests.
+[  FAILED  ] 3 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:189 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (33450 ms total)
+[  PASSED  ] 6 tests.
+[  FAILED  ] 1 tests.
+[ RUN      ] RobotNavigationTest.NodeRunning
+[       OK ] RobotNavigationTest.NodeRunning
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.RobotMoves
+[       OK ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[       OK ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[       OK ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanning
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:190 - Value of: std::find(valid_algorithms.begin(), valid_algorithms.end(), algorithm_used) != valid_algorithms.end()
+  Actual: false
+Expected: true
+Invalid Path Planning Algorithm: 
+
+[  FAILED  ] RobotNavigationTest.PathPlanning
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[       OK ] RobotNavigationTest.LocalizationAccuracy
+[==========] 7 tests from 1 test suite ran. (33239 ms total)
+[  PASSED  ] 6 tests.
+[  FAILED  ] 1 tests.
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[       OK ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.SendNavigationGoalFromFile
+[       OK ] RobotNavigationTest.SendNavigationGoalFromFile
+[ RUN      ] RobotNavigationTest.RobotMoves
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test SetGoalServiceAvailable is defined using TEST_F but
+test RobotMoves is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.RobotMoves
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test SetGoalServiceAvailable is defined using TEST_F but
+test ObstacleDetection is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleAvoidance
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test SetGoalServiceAvailable is defined using TEST_F but
+test ObstacleAvoidance is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.ObstacleAvoidance
+[ RUN      ] RobotNavigationTest.PathPlanningAlgorithm
+[       OK ] RobotNavigationTest.PathPlanningAlgorithm
+[ RUN      ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:71 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:71 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 8 tests from 1 test suite ran. (113964 ms total)
+[  PASSED  ] 3 tests.
+[  FAILED  ] 5 tests.
+[ RUN      ] RobotNavigationTest.PathPlanningAlgorithm
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.PathPlanningAlgorithm
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.SendNavigationGoalFromFile
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SendNavigationGoalFromFile
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test PathPlanningAlgorithm is defined using TEST_F but
+test ObstacleDetection is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 6 tests from 1 test suite ran. (26320 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 6 tests.
+[ RUN      ] RobotNavigationTest.PathPlanningAlgorithm
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.PathPlanningAlgorithm
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.SendNavigationGoalFromFile
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SendNavigationGoalFromFile
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test PathPlanningAlgorithm is defined using TEST_F but
+test ObstacleDetection is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:73 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 6 tests from 1 test suite ran. (26036 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 6 tests.
+[ RUN      ] RobotNavigationTest.SetGoalServiceAvailable
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:80 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SetGoalServiceAvailable
+[ RUN      ] RobotNavigationTest.SendNavigationGoalFromFile
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:80 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.SendNavigationGoalFromFile
+[ RUN      ] RobotNavigationTest.ObstacleDetection
+[  FAILED  ] /usr/src/googletest/googletest/src/gtest.cc:2536 - Failed
+All tests in the same test suite must use the same test fixture
+class, so mixing TEST_F and TEST in the same test suite is
+illegal.  In test suite RobotNavigationTest,
+test SetGoalServiceAvailable is defined using TEST_F but
+test ObstacleDetection is defined using TEST.  You probably
+want to change the TEST to TEST_F or move it to another test
+case.
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetection
+[ RUN      ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:78 - Value of: valid_algorithm
+  Actual: false
+Expected: true
+Invalid or missing Path Planning Algorithm in response!
+
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:80 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.ObstacleDetectionAndAvoidance
+[ RUN      ] RobotNavigationTest.LocalizationAccuracy
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:78 - Value of: valid_algorithm
+  Actual: false
+Expected: true
+Invalid or missing Path Planning Algorithm in response!
+
+[  FAILED  ] /home/br/workspace/pepper_rob_ws/src/cssr4Africa/unit_tests/robotNavigationTest/src/robotNavigationTestImplementation.cpp:80 - Value of: ros::service::waitForService("/robotNavigation/set_goal", ros::Duration(5.0))
+  Actual: false
+Expected: true
+Service /robotNavigation/set_goal is not available!
+
+[  FAILED  ] RobotNavigationTest.LocalizationAccuracy
+[==========] 5 tests from 1 test suite ran. (180317 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 5 tests.

@@ -181,7 +181,7 @@ void RobotLocalization::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     }
 }
 
-bool RobotLocalization::resetPoseService(robot_localization::SetPose::Request& req, robot_localization::SetPose::Response& res) {
+bool RobotLocalization::resetPoseService(cssr_system::SetPose::Request& req, cssr_system::SetPose::Response& res) {
     initial_robot_x = req.x;
     initial_robot_y = req.y;
     initial_robot_theta = angles::from_degrees(req.theta);

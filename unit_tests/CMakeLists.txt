@@ -21,21 +21,24 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   angles
   message_generation
+
 )
 
 ## Generate messages in the 'msg' folder
 add_message_files(
   DIRECTORY
-  exampleComponentTest/msg   
+  robotNavigationTest/msg   
   FILES
+  Goal.msg
 #   Message1.msg
 #   Message2.msg
 )
 
 add_service_files(
   DIRECTORY
-  exampleComponentTest/srv
+  robotNavigationTest/srv
   FILES
+  set_goal.srv
   # service_file.srv
 )
 
@@ -51,6 +54,8 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs  # Or other packages containing msgs
+  geometry_msgs
+  nav_msgs
 )
 
 ################################################
@@ -67,11 +72,9 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
- INCLUDE_DIRS exampleComponentTest
- LIBRARIES ${PROJECT_NAME}
-#  CATKIN_DEPENDS roscpp
-#  DEPENDS system_lib
-  CATKIN_DEPENDS message_runtime
+  INCLUDE_DIRS robotNavigationTest/include
+  LIBRARIES ${PROJECT_NAME}
+  CATKIN_DEPENDS roscpp roslib std_msgs nav_msgs geometry_msgs sensor_msgs tf message_runtime
 )
 
 ## System dependencies are found with CMake's conventions
@@ -89,10 +92,10 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-include
-exampleComponentTest/include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  robotNavigationTest/include
 )
 
-
-add_subdirectory(exampleComponentTest)
+add_subdirectory(robotNavigationTest)

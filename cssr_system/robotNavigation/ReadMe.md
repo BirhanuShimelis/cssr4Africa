@@ -1,4 +1,13 @@
-# RobotNavigation Node Usage Guide
+<div align="center">
+  <img src="CSSR4AfricaLogo.svg" alt="CSSR4Africa Logo" style="width:50%; height:auto;">
+</div>
+
+<div align="center">
+  <h1>Robot Navigation Node Usage Guide</h1>
+</div>
+
+
+
 
 This guide provides concise instructions on how to:
 
@@ -44,8 +53,8 @@ rosdep install --from-paths src --ignore-src -r -y
 Build the workspace:
 
 ```bash
-catkin_make
-source devel/setup.bash
+br@br:~/workspace/pepper_rob_ws$ catkin_make
+br@br:~/workspace/pepper_rob_ws$ source devel/setup.bash
 ```
 
 ---
@@ -55,7 +64,7 @@ source devel/setup.bash
 Start the `robotNavigation` node:
 
 ```bash
-rosrun cssr_system robotNavigation
+br@br:~/workspace/pepper_rob_ws$ rosrun cssr_system robotNavigation
 ```
 
 ---
@@ -65,7 +74,7 @@ rosrun cssr_system robotNavigation
 View the pose data assuming robot localization is running and publishing the current pose:
 
 ```bash
-rostopic echo /robotNavigation/pose
+br@br:~/workspace/pepper_rob_ws$ rostopic echo /robotNavigation/pose
 ```
 
 ---
@@ -75,7 +84,7 @@ rostopic echo /robotNavigation/pose
 Reset the robot's pose:
 
 ```bash
-rosservice call /robotNavigation/reset_pose 2.0 3.0 90.0
+br@br:~/workspace/pepper_rob_ws$ rosservice call /robotLocalization/reset_pose 2.0 6.6 0.0
 ```
 
 ---
@@ -85,7 +94,7 @@ rosservice call /robotNavigation/reset_pose 2.0 3.0 90.0
 Send a goal to the robot:
 
 ```bash
-rosservice call /robotNavigation/set_goal 3.0 6.6 0.0
+br@br:~/workspace/pepper_rob_ws$ rosservice call /robotNavigation/set_goal 2.0 6.6 0.0
 ```
 
 

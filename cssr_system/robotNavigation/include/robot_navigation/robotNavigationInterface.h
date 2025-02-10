@@ -4,6 +4,10 @@
 * Date: September 2, 2024
 * Version: v1.0
 *
+* Author: Birhanu Shimelis Girma
+* Date: December 15, 2024
+* Version: v1.1
+*
 * Copyright (C) 2023 CSSR4Africa Consortium
 *
 * This project is funded by the African Engineering and Technology Network (Afretec)
@@ -16,7 +20,6 @@
 
 #ifndef ROBOT_NAVIGATION_H
 #define ROBOT_NAVIGATION_H
-
 
 #define ROS
  
@@ -49,7 +52,7 @@
 #include <nav_msgs/Odometry.h>          // For nav_msgs::Odometry
 #include <iomanip>                      // for std::setprecision and std::fixed
 
-#include "robot_navigation/set_goal.h"  // Include for the set_goal service
+#include "cssr_system/set_goal.h"  // Include for the set_goal service
 #include "geometry_msgs/Pose2D.h"       // For geometry_msgs::Pose2D
 #include <boost/algorithm/string.hpp>
 #include <std_msgs/Float64.h>  // Include for publishing Float64 messages
@@ -64,11 +67,9 @@
 
 #include <thread>
 #include <atomic>
-
 #include <queue>
 #include <vector>
 #include <climits>
-
 #include <opencv2/opencv.hpp>
 #include <ros/ros.h>
 #include <queue>
@@ -77,10 +78,6 @@
 #include <cmath>
 #include <climits>
 #include <string>
-
-
-//#include <cv2.h>
-//#include <highgui.h>
 #include <opencv2/opencv.hpp>
 
 using namespace std;
@@ -120,12 +117,12 @@ extern std::string packagedir;
 extern std::vector<double> robot_pose;
 
 // Configuration parameters
-extern std::string implementation_platform;
+//extern std::string implementation_platform;
 extern std::string environment_map_file;
 extern std::string configuration_map_file;
 extern int path_planning_algorithm;
 extern bool social_distance_mode;
-extern std::string simulator_topics;
+//extern std::string simulator_topics;
 extern std::string robot_topics;
 extern string topics_filename;
 extern bool verbose_mode;
@@ -138,6 +135,7 @@ extern std::atomic<bool> is_moving;  // Flag to indicate if the robot is moving
 
 
 #define PUBLISH_RATE 10
+
 
 // Size of the map
 extern int x_map_size;
@@ -154,28 +152,14 @@ extern string mapWindowName;
 
 extern std::vector<double> leg_home_position;  // Hip pitch, hip roll, knee pitch
 extern std::vector<double> head_home_position;   // Head pitch and yaw
-// Mat images to display the maps
-// extern Mat mapImage;
-// extern Mat mapImageColor;
-// extern Mat mapImageLarge;
-// extern Mat configurationSpaceImage;
 
 typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> ControlClient;
 typedef boost::shared_ptr<ControlClient> ControlClientPtr;
 
-/* global variables with the initial and current robot pose, the odometry pose, and the difference between the initial pose and the initial odometry pose  */
-// double                  initial_x        = 0; 
-// double                  initial_y        = 0;
-// double                  initial_theta    = 0;
+/* global variables with the current robot pose, the odometry pose, and the difference between the initial pose and the initial odometry pose  */
 extern double                  current_x;
 extern double                  current_y;
 extern double                  current_theta;
-// double                  odom_x           = 0;
-// double                  odom_y           = 0;
-// double                  odom_theta       = 0;
-// double                  adjustment_x     = 0; 
-// double                  adjustment_y     = 0;
-// double                  adjustment_theta = 0;
 
 /***************************************************************************************************************************
 
@@ -253,10 +237,6 @@ extern int directions_8_way[8][2];
 
 extern std::vector<std::vector<int>> graph;  // Graph to store the map
 
-
-
-
-
 extern locomotionParameterDataType locomotionParameterData;
 
 extern geometry_msgs::Twist msg;
@@ -322,37 +302,25 @@ int  signnum(double x); // return the sign of a number
    int _kbhit();
 #endif
 
+/***************************************************************************************************************************
 
+   Function declarations for reading and writing robot pose data
 
-/* 
- *   Function to read the the robot pose from an input file
- * @param:
- *   robot_pose_input: vector to store the robot pose
- *
- * @return:
- *    None
- */
+****************************************************************************************************************************/
 void read_robot_pose_input(std::vector<double>& robot_pose_input);
 
 void write_robot_pose_input(std::vector<double>& robot_pose_input);
 
-/*  
- *   Function to extract the topic from the topics file
- *   The function reads the topics file and extracts the topic for the specified key.
- *
- *   @param:
- *       key: the key to search for in the topics file
- *       topic_file_name: the topics filename
- *       topic_name: the topic name extracted
- *
- *   @return:
- *       0 if successful, 1 otherwise
- */
+/***************************************************************************************************************************
+* Function to extract the topic name from the topics file
+***************************************************************************************************************************/
 int extract_topic(string key, string topic_file_name, string *topic_name);
 
 void move_to_position(ControlClientPtr& client, const std::vector<std::string>& joint_names, double duration, 
                         bool open_hand, string hand, string hand_topic, 
                         const std::string& position_name, std::vector<double> positions);
+
+
 /* Read the robot navigation configuration */
 /* 
  *   Function to read the robot navigation configuration.
@@ -374,10 +342,8 @@ void move_to_position(ControlClientPtr& client, const std::vector<std::string>& 
  *   0 if the configuration file is read successfully
  *   1 if the configuration file is not read successfully
  */
-int read_configuration_file(string* platform, string* environment_map_file, string* configuration_map_file, int* path_planning_algorithm, bool* social_distance_mode, string* simulator_topics, string* robot_topics, string* topics_filename, bool* debug_mode);
-
-void print_configuration(string platform, string environment_map_file, string configuration_map_file, int path_planning_algorithm, bool social_distance_mode, string simulator_topics, string robot_topics, string topics_filename, bool debug_mode);
-
+int read_configuration_file(string* environment_map_file, string* configuration_map_file, int* path_planning_algorithm, bool* social_distance_mode, string* robot_topics, bool* debug_mode);
+void print_configuration( string environment_map_file, string configuration_map_file, int path_planning_algorithm, bool social_distance_mode, string robot_topics, bool debug_mode);
 void save_waypoint_map(vector<int> compressionParams, Mat mapImageLarge, string fileName);
 
 void mark_waypoints_on_map(int path_planning_algorithm, Mat mapImage, std::string output_filename, bool debug);
@@ -400,76 +366,36 @@ int go_to_home(std::string actuator, std::string topics_filename, bool debug);
 
 int move_robot(double start_x, double start_y, double start_theta, double goal_x, double goal_y, double goal_theta, ros::Publisher velocity_publisher, ros::Rate rate, bool debug);
 
-/*
- *   Function to round a doubleing point number to a specified number of decimal places
- *
- *  @param:
- *     value: the value to be rounded
- *     decimal_places: the number of decimal places
- *  @return:
- *     the rounded value
- * 
- */
+
+// Function to round a doubleing point number to a specified number of decimal places
 double round_floating_point(double value, int decimal_places);
 
-/* 
- *   Function to convert radians to degrees
- *   This function converts the angle in radians to degrees
- *
- * @param:
- *   radians: the angle in radians
- *
- * @return:
- *   the angle in degrees
- */
+// Function to convert radians to degrees
 double degrees(double radians);
 
-/* 
- *   Function to convert degrees to radians
- *   This function converts the angle in degrees to radians
- *
- * @param:
- *   degrees: the angle in degrees
- *
- * @return:
- *   the angle in radians
- */
+// Function to convert degrees to radians
 double radians(double degrees);
 
-
-/*  
- *   Function to prompt the user to press any key to exit the program
- *
- *   @param:
- *       status: the status of the program
- *
- *   @return:
- *       None
- */
+// Function to prompt the user to press any key to exit the program
 void prompt_and_exit(int status);
 
-/*  
- *   Function to prompt the user to press any key to continue or press X to exit the program
- *
- *   @param:
- *       None
- *
- *   @return:
- *       None
- */
+// Function to prompt the user to press any key to continue or press X to exit the program
 void prompt_and_continue();
 
+// 
 void move_to_position(ControlClientPtr& head_client, const std::vector<std::string>& head_joint_names, std::vector<double> head_positions, 
                         ControlClientPtr& left_arm_client, const std::vector<std::string>& left_arm_joint_names, std::vector<double> left_arm_positions, 
                         ControlClientPtr& right_arm_client, const std::vector<std::string>& right_arm_joint_names, std::vector<double> right_arm_positions, 
                         ControlClientPtr& leg_client, const std::vector<std::string>& leg_joint_names, std::vector<double> leg_positions, 
                         double duration);
-
+                        
+// Function to move one actuator to a position
 void move_one_actuator_to_position(ControlClientPtr& client, const std::vector<std::string>& joint_names, double duration, 
                         std::vector<double> positions);
 
 
 ControlClientPtr create_client(const std::string& topic_name) ;
 
+// Function to move the robot to a default position
 void move_robot_actuators_to_default();
 #endif // ROBOT_NAVIGATION_H
